@@ -7,8 +7,16 @@ environment:
   sdk: ^3.11.5
 
 dependencies:
+  cupertino_icons: ^1.0.9
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
+  geocoding: ^4.0.0
+  geolocator: ^14.0.2
+  google_fonts: ^8.1.0
+  http: ^1.6.0
+  hugeicons: ^1.1.6
+  lottie: ^3.3.3
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +25,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - lib/assets/cloudy.json
+    - lib/assets/cloudyRain.json
+    - lib/assets/little sun.json
+    - lib/assets/Weather-partly cloudy.json
+    - lib/assets/Weather-storm.json
+    - lib/assets/Weather-snow.json
