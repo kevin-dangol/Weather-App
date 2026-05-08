@@ -25,9 +25,11 @@ class _WeatherPageState extends State<WeatherPage> {
 
       final result = await weatherService.getWeather(cityName);
       
-      setState(() {
-        weather = result;
-      });
+      if (mounted) {
+        setState(() {
+          weather = result;
+        });
+      }
 
       debugPrint('weather: $result');
 
@@ -47,25 +49,31 @@ class _WeatherPageState extends State<WeatherPage> {
 
       case 'thunderstorm':
         return 'lib/assets/Weather-storm.json';
+
       case 'drizzle':
-        return 'lib/assets/cloudyRain.json';
       case 'rain':
         return 'lib/assets/cloudyRain.json';
+
       case 'snow':
         return 'lib/assets/Weather-snow.json';
-      case 'atmosphere':
+
+      case 'mist':
+      case 'smoke':
+      case 'haze':
+      case 'dust':
+      case 'fog':
         return 'lib/assets/Weather-partly cloudy.json';
+
       case 'clear':
         return 'lib/assets/little sun.json';
+
       case 'clouds':
         return 'lib/assets/cloudy.json';
+
       default:
         return 'lib/assets/little sun.json';
-
-
     }
     
-
   }
 
   @override
@@ -120,7 +128,7 @@ class _WeatherPageState extends State<WeatherPage> {
             ),
         
             Align(
-              alignment: AlignmentGeometry.center,
+              alignment: Alignment.center,
               child: Text(weather != null
                 ? '${weather!.temp.round()} °C'
                 : 'Loading...',

@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -27,10 +25,8 @@ class WeatherService {
 
       final result = Weather.fromJson(jsonDecode(response.body));
 
-      print('fetch: $result');
-
       return result;
-
+ 
     } else{
 
       throw Exception('Error loading data');
@@ -41,13 +37,29 @@ class WeatherService {
 
   Future<String> getCurrentCity() async{
 
+
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      throw Exception('Location services are disabled.');
+    }
+
     LocationPermission permission = await Geolocator.checkPermission();
 
-    if(permission == LocationPermission.denied) {
-
+    if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-
     }
+
+    if (permission == LocationPermission.denied) {
+      throw Exception('Location permission denied');
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception(
+        'Location permissions are permanently denied.',
+      );
+    }
+
 
     Position position = await Geolocator.getCurrentPosition(
 
@@ -55,14 +67,18 @@ class WeatherService {
 
     );
 
-    List<Placemark> placemarks =  await placemarkFromCoordinates(position.latitude, position.longitude);
-    debugPrint('placemarks: $placemarks');
+    List<Placemark> placemarks =  await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude
+    );
 
-    String? city = placemarks[0].locality;
+    String city =
+        placemarks[0].locality ??
+        placemarks[0].subAdministrativeArea ??
+        placemarks[0].administrativeArea ??
+        '';
 
-    debugPrint('city: $city');
-
-    return city ?? '';
+    return city;
 
   }
 
