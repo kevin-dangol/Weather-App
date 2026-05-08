@@ -97,7 +97,7 @@ class _WeatherPageState extends State<WeatherPage> {
         
             Text(
 
-              weather?.cityName ?? 'Loading City...',
+              weather?.cityName ?? 'Loading...',
 
               style: GoogleFonts.oswald(
                 textStyle: const TextStyle(
@@ -119,35 +119,40 @@ class _WeatherPageState extends State<WeatherPage> {
 
             ),
         
-            Text(weather != null
-              ? '${weather!.temp.round()} °C'
-              : 'Loading temperature...',
-
-              style: GoogleFonts.oswald(
-                textStyle: const TextStyle(
-
-                  color: Colors.white,
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-
-                ),
-              ),
+            Align(
+              alignment: AlignmentGeometry.center,
+              child: Text(weather != null
+                ? '${weather!.temp.round()} °C'
+                : 'Loading...',
               
+                style: GoogleFonts.oswald(
+                  textStyle: const TextStyle(
+              
+                    color: Colors.white,
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+              
+                  ),
+                ),
+                
+              ),
             ),
 
-            Text(
-
-              weather?.condition ?? '',
-              style: GoogleFonts.oswald(
-                textStyle: const TextStyle(
-
-                  color: Colors.white,
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-
-                ),
-              ),
+            Align(
+              alignment: AlignmentGeometry.center,
+              child: Text(
+                weather?.condition ?? '',
+                style: GoogleFonts.oswald(
+                  textStyle: const TextStyle(
               
+                    color: Colors.white,
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+              
+                  ),
+                ),
+                
+              ),
             ),
         
           ],
